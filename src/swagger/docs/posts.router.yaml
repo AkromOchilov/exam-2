@@ -1,0 +1,86 @@
+/posts:
+    get:
+        tags:
+            - posts
+        summary: get all accepted posts
+        parameters:
+            - in: query
+              name: date
+              schema:
+                  type: string
+              description: Filter posts by date
+            - in: query
+              name: subcategory
+              schema:
+                  type: string
+              description: Filter posts by subcategory
+            - in: query
+              name: format
+              schema:
+                  type: string
+              description: Filter posts by format, format should Capitalized
+            - in: query
+              name: organizator
+              schema:
+                  type: string
+              description: Filter posts by organizator
+            - in: query
+              name: page
+              schema:
+                  type: integer
+              description: Filter posts by pagination page
+
+        responses:
+            '200':
+                description: all posts with accepted status
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Response'
+    post:
+        tags:
+            - posts
+        summary: create a new post
+        requestBody:
+            description: create account
+            content:
+                multipart/form-data:
+                    schema:
+                        $ref: '#/components/schemas/CreatePost'
+            required: true
+        responses:
+            '201':
+                description: login user
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Response'
+            '400':
+                description: error message
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ErrorResponse'
+
+/posts/{postId}:
+    get:
+        tags:
+            - posts
+        summary: get post by postId
+        parameters:
+            - name: postId
+              in: path
+              required: true
+        responses:
+            '200':
+                description: accepted single post with
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SingleResponse'
+            '400':
+                description: error message
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SingleErrorResponse'

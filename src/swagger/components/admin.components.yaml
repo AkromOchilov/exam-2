@@ -1,0 +1,134 @@
+components:
+    schemas:
+        Response:
+            type: object
+            properties:
+                status:
+                    type: integer
+                message:
+                    type: string
+                data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            postId:
+                                type: integer
+                            category:
+                                type: string
+                            subcategory:
+                                type: string
+                            format:
+                                type: string
+                            date:
+                                type: string
+                            link:
+                                type: string
+                            time:
+                                type: string
+                            organizator:
+                                type: string
+                            job:
+                                type: string
+                            contact:
+                                type: string
+                            title:
+                                type: string
+                            content:
+                                type: string
+                            image:
+                                type: string
+                            created_at:
+                                type: string
+                            status:
+                                type: string
+        Login:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+        LoginErrorResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                error_name:
+                    type: string
+                message:
+                    type: string
+        LoginResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                message:
+                    type: string
+                access_token:
+                    type: string
+                data:
+                    type: object
+                    properties:
+                        adminId:
+                            type: integer
+                        username:
+                            type: string
+                        avatar:
+                            type: string
+        PutBody:
+            type: object
+            properties:
+                postId:
+                    type: integer
+                status:
+                    type: string
+        PutResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                message:
+                    type: string
+                data:
+                    type: object
+                    properties:
+                        postId:
+                            type: integer
+                        category:
+                            type: string
+                        subcategory:
+                            type: string
+                        format:
+                            type: string
+                        date:
+                            type: string
+                        link:
+                            type: string
+                        time:
+                            type: string
+                        organizator:
+                            type: string
+                        job:
+                            type: string
+                        contact:
+                            type: string
+                        title:
+                            type: string
+                        content:
+                            type: string
+                        image:
+                            type: string
+                        created_at:
+                            type: string
+                        status:
+                            type: string
+        PutErrorResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                error_name:
+                    type: string
+                message:
+                    type: string

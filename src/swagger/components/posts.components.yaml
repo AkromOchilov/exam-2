@@ -1,0 +1,129 @@
+components:
+    schemas:
+        Response:
+            type: object
+            properties:
+                status:
+                    type: integer
+                message:
+                    type: string
+                data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            postId:
+                                type: integer
+                            category:
+                                type: string
+                            subcategory:
+                                type: string
+                            format:
+                                type: string
+                            date:
+                                type: string
+                            link:
+                                type: string
+                            time:
+                                type: string
+                            organizator:
+                                type: string
+                            job:
+                                type: string
+                            contact:
+                                type: string
+                            title:
+                                type: string
+                            content:
+                                type: string
+                            image:
+                                type: string
+                            created_at:
+                                type: string
+                            status:
+                                type: string
+        CreatePost:
+            type: object
+            properties:
+                category:
+                    type: string
+                subcategory:
+                    type: string
+                format:
+                    type: string
+                date:
+                    type: string
+                link:
+                    type: string
+                time:
+                    type: string
+                organizator:
+                    type: string
+                job:
+                    type: string
+                contact:
+                    type: string
+                title:
+                    type: string
+                content:
+                    type: string
+                image:
+                    type: file
+        ErrorResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                error_name:
+                    type: string
+                message:
+                    type: string
+        SingleResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                message:
+                    type: string
+                data:
+                    type: object
+                    properties:
+                        postId:
+                            type: integer
+                        category:
+                            type: string
+                        subcategory:
+                            type: string
+                        format:
+                            type: string
+                        date:
+                            type: string
+                        link:
+                            type: string
+                        time:
+                            type: string
+                        organizator:
+                            type: string
+                        job:
+                            type: string
+                        contact:
+                            type: string
+                        title:
+                            type: string
+                        content:
+                            type: string
+                        image:
+                            type: string
+                        created_at:
+                            type: string
+                        status:
+                            type: string
+        SingleErrorResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                error_name:
+                    type: string
+                message:
+                    type: string

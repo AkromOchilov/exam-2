@@ -1,0 +1,69 @@
+/admin/posts:
+    get:
+        tags:
+            - admin posts
+        summary: get all posts with waiting status
+        parameters:
+            - in: query
+              name: status
+              schema:
+                  type: string
+              description: Filter posts by status options[accepted, waiting, rejected]
+        responses:
+            '200':
+                description: all posts
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Response'
+        security:
+            - Bearer:
+                  type: oauth2
+    put:
+        tags:
+            - admin posts
+        summary: accept or reject post
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/PutBody'
+        responses:
+            '200':
+                description: Success schema
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PutResponse'
+            '400':
+                description: Error schema
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PutErrorResponse'
+        security:
+            - Bearer:
+                  type: oauth2
+/login:
+    post:
+        tags:
+            - admin posts
+        summary: Login into admin account
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Login'
+        responses:
+            '200':
+                description: login user
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginResponse'
+            '400':
+                description: error message
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginErrorResponse'
