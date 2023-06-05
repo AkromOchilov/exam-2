@@ -40,6 +40,10 @@ components:
                                 type: string
                             created_at:
                                 type: string
+                            updated_at:
+                                type: string
+                            deleted_at:
+                                type: string
                             status:
                                 type: string
         CreatePost:
@@ -115,6 +119,10 @@ components:
                         image:
                             type: string
                         created_at:
+                            type: string
+                        updated_at:
+                            type: string
+                        deleted_at:
                             type: string
                         status:
                             type: string

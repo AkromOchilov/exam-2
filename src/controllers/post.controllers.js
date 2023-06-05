@@ -1,11 +1,13 @@
 import { read, write } from '../utils/model.js';
+import userModel from './../model/userModel.js';
 import { resolve } from 'path';
 import { NotFoundError, InternalServerError } from '../utils/error.js';
 
 // Get all posts with accepted status
-let GET = (req, res, next) => {
+let GET = async (req, res, next) => {
 	try {
-		let posts = read('posts').filter((post) => post.status == 'accepted');
+		let posts = await userModel.getAllPosts();
+
 		let { date, subcategory, format, organizator, page } = req.query;
 		page = page || process.DEFAULT.pagination.page;
 		let limit = process.DEFAULT.pagination.limit;
@@ -36,13 +38,12 @@ let GET = (req, res, next) => {
 };
 
 //Get single post with accepted status
-let GET_SINGLE = (req, res, next) => {
+let GET_SINGLE = async (req, res, next) => {
 	try {
 		let { postId } = req.params;
-		let post = read('posts')
-			.filter((post) => post.status == 'accepted')
-			.find((post) => post.postId == postId);
-		if (!post) {
+		let post = await userModel.getPostById(postId);
+		console.log(post);
+		if (post.length == 0) {
 			return next(new NotFoundError(404, 'Post not found'));
 		}
 		res.status(200).json({
@@ -56,10 +57,8 @@ let GET_SINGLE = (req, res, next) => {
 };
 
 // Create post
-let POST = (req, res) => {
+let POST = async (req, res, next) => {
 	try {
-		let posts = read('posts');
-		console.log('post request');
 		let {
 			category,
 			subcategory,
@@ -77,9 +76,7 @@ let POST = (req, res) => {
 
 		let postImage = Date.now() + image.name.replace(/\s/g, '');
 		image.mv(resolve('uploads', postImage));
-
-		let newPost = {
-			postId: posts.at(-1)?.postId + 1 || 1,
+		let body = [
 			category,
 			subcategory,
 			format,
@@ -91,13 +88,12 @@ let POST = (req, res) => {
 			contact,
 			title,
 			content,
-			image: postImage,
-			created_at: new Date(),
-			status: 'waiting',
-		};
+			'waiting',
+			postImage,
+		];
 
-		posts.push(newPost);
-		write('posts', posts);
+		let newPost = await userModel.createNewPost(body);
+
 		res.status(201).json({
 			status: 201,
 			message: 'successfully added',

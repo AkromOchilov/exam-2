@@ -1,4 +1,5 @@
 import { read, write, hashPassword } from '../utils/model.js';
+import adminModel from './../model/adminModel.js';
 import jwt from './../utils/jwt.js';
 import {
 	InternalServerError,
@@ -6,17 +7,14 @@ import {
 	BadRequestError,
 } from '../utils/error.js';
 
-let LOGIN = (req, res, next) => {
+let LOGIN = async (req, res, next) => {
 	try {
-		let admins = read('admins');
 		let { username, password } = req.body;
 		password = hashPassword(password);
 
-		let admin = admins.find(
-			(admin) => admin.username == username && admin.password == password,
-		);
+		let admin = await adminModel.adminLogin(username, password);
 
-		if (!admin) {
+		if (!admin.length) {
 			return next(
 				new BadRequestError(400, 'invalid username or password'),
 			);
@@ -34,13 +32,11 @@ let LOGIN = (req, res, next) => {
 	}
 };
 
-let GET = (req, res, next) => {
+let GET = async (req, res, next) => {
 	try {
 		let { status } = req.query;
 		if (!status) status = 'waiting';
-		let posts = read('posts')
-			.filter((post) => post.status == status)
-			.sort((a, b) => b.postId - a.postId);
+		let posts = await adminModel.getAdminPosts(status);
 
 		res.status(200).json({
 			status: 200,
@@ -52,17 +48,16 @@ let GET = (req, res, next) => {
 	}
 };
 
-let PUT = (req, res, next) => {
+let PUT = async (req, res, next) => {
 	try {
 		let posts = read('posts');
 		let { status, postId } = req.body;
 
-		let post = posts.find((post) => post.postId == postId);
-		if (!post) {
-			return next(new NotFoundError(404, 'post not found'));
-		}
-		post.status = status || post.status;
-		write('posts', posts);
+		let post = await adminModel.updatePost(status, postId);
+		console.log(post);
+		// if (!post.length) {
+		// 	return next(new NotFoundError(404, 'post not found'));
+		// }
 		res.status(200).json({
 			status: 200,
 			message: 'successfully updated',
